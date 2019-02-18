@@ -1,20 +1,19 @@
-input()
+c = input()
 a = list(map(int, input().split(' ')))
-his = a
-mx = 0
-now = 1
-while his:
-    tmp = list()
-    for i in range(len(his) - 1):
-        if a[i+now] < 0:
-            tmp.append(-1)
-        elif his[i] == -1:
-            tmp.append(-1)
-        else:
-            n = his[i] + a[i + now]
-            mx = n if n>mx else mx
-            tmp.append(n)
-    his = tmp
-    now += 1
 
-print(mx)
+# 이거때문에 런타임에러로 고생
+if c == '1':
+    print(a[0])
+else:
+    # 최고 수
+    mx = a[0] + a[1]
+    # 현재 합
+    n = 0
+    for i in a:
+        n += i
+        mx = mx if mx > n else n
+        # 만약 합이 0아래면 다음부터 다시 합함
+        if n < 0:
+            n = 0
+
+    print(mx)
