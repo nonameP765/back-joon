@@ -11,4 +11,3 @@ for i in range(3, a):
 
 print(dp[a])
 
-
