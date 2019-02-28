@@ -1,7 +1,18 @@
-q = [i + 1 for i in range(int(input()))]
+for i in range(int(input())):
+    a, b = map(int, input().split(' '))
+    q = [i for i in range(a)]
+    r = list(map(int, input().split(' ')))
 
-while len(q) != 1:
-    print(q.pop(0), end=' ')
-    q.append(q.pop(0))
+    n = 0
+    while True:
+        if max(r) == r[0]:
+            n += 1
+            r.pop(0)
+            if b == q.pop(0):
+                print(n)
+                break
+        else:
+            r.append(r.pop(0))
+            q.append(q.pop(0))
 
-print(q[0])
+
