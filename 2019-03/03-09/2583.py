@@ -1,6 +1,8 @@
 h, w, c = map(int, input().split(' '))
 l = [[0 for j in range(w)]for i in range(h)]
 visited = [[False for j in range(w)]for i in range(h)]
+
+# 2차원 배열 생성 솔직히 위아래 뒤집혀도 상관없음
 for i in range(c):
     w1, h1, w2, h2 = map(int, input().split(' '))
     for j in range(h1, h2):
@@ -12,6 +14,7 @@ re = list()
 for j in range(h):
     for i in range(w):
         if not visited[j][i]:
+            # 0을 기준으로 탐색
             if l[j][i] == 0:
                 count = 0
                 stack = [(j, i)]
