@@ -2,15 +2,11 @@ c = int(input())
 
 l = [list(map(int, input().split(' '))) for i in range(c)]
 
-l2 = set()
-mi = l[0][0]
-ma = l[0][0]
 m = 0
 for i in range(c):
     for j in range(c):
         m = max(m, l[i][j])
 
-l2 = range
 mx = 0
 mx_num = 0
 
