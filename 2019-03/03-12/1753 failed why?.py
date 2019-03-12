@@ -11,12 +11,23 @@ for i in range(E):
 check = {i: 'INF' for i in range(1, V + 1)}
 visited = [i for i in range(1, V + 1)]
 check[K] = 0
-pq = [(K, 0)]
-print(pq)
-while pq:
-    now, w = pq.pop(0)
-    if check[now] is not None and check[now] < w:
-        continue
+
+while True:
+    mi_num = None
+    mi = None
+    for i in range(len(visited)):
+        if check[visited[i]] is not 'INF':
+            if not mi:
+                mi_num = i
+                mi = check[visited[i]]
+            if mi_num >= check[visited[i]]:
+                mi_num = i
+                mi = check[visited[i]]
+
+    if mi_num is None:
+        break
+    now = visited[mi_num]
+    visited.pop(mi_num)
 
     for i in graph[now].keys():
         if check[i] is 'INF':
