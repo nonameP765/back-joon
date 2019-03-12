@@ -1,30 +1,31 @@
+from heapq import heappush, heappop
+
 V, E = map(int, input().split(' '))
 
 K = int(input())
 
-graph = {i: dict() for i in range(1, V + 1)}
+graph = {i: list() for i in range(1, V + 1)}
 
 for i in range(E):
     u, v, w = map(int, input().split(' '))
-    graph[u][v] = w
+    graph[u].append((v, w))
 
 check = {i: 'INF' for i in range(1, V + 1)}
-visited = [i for i in range(1, V + 1)]
 check[K] = 0
-pq = [(K, 0)]
+pq = list()
+heappush(pq, (0, K))
 
 while pq:
-    print(pq)
-    now, w = pq.pop(0)
+    w, now = heappop(pq)
 
-    if check[now] is not None and check[now] < w:
+    if check[now] is not 'INF' and check[now] < w:
         continue
 
-    for i in graph[now].keys():
-        nc = graph[now][i] + check[now]
+    for i, w in graph[now]:
+        nc = w + check[now]
         if check[i] is 'INF' or nc < check[i]:
             check[i] = nc
-            pq.append((i, check[i]))
+            heappush(pq, (nc, i))
 
 for i in range(1, V + 1):
     print(check[i])
