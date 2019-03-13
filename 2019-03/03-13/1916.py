@@ -16,11 +16,14 @@ for _ in range(M):
 
 start, end = map(int, input().split(' '))
 check = {i: INF for i in range(1, N + 1)}
+
+# 우선순위 큐를 힙으로 구현
 hq = list()
 heappush(hq, (0, start))
 
 while hq:
     w, now = heappop(hq)
+    # 만약 끝을 보면 바로 탈출
     if now == end:
         break
     if check[now] < w:
