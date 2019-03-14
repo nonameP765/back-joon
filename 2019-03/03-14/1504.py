@@ -19,14 +19,15 @@ for i in range(E):
 
 m1, m2 = map(int, input().split(' '))
 
-
+# 우선순위 큐 탐색 구현
 def hq_search(start, end):
+    # 자기로 가는건 무조건 0
     if start == end:
         return 0
     check = {i: INF for i in range(1, N + 1)}
     hq = list()
     heappush(hq, (0, start))
-
+    
     while hq:
         w, now = heappop(hq)
 
@@ -43,6 +44,9 @@ def hq_search(start, end):
     
     return check[end]
 
+# 시작 -> 거치는곳1 -> 거치는곳2 -> 마지막 과
+# 시작 -> 거치는곳2 -> 거치는곳1 -> 마지막 을 비교해서
+# 작은쪽을 출력하고, 경우의수가 없어서 INF먹어버린 경우는 -1 출력
 re = min(hq_search(1, m1) + hq_search(m1, m2) + hq_search(m2, N),
           hq_search(1, m2) + hq_search(m2, m1) + hq_search(m1, N))
 print(-1 if re >= INF else re)
