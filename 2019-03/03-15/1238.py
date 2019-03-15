@@ -14,6 +14,7 @@ for _ in range(M):
         graph[a][b] = c
 
 
+# 우선순위 큐 구현
 def search(start, end):
     hq = list()
     heappush(hq, (0, start))
@@ -34,6 +35,8 @@ def search(start, end):
 
 mx = 0
 
+# i에서 X로 가는것, X에서 1에서 가는것이 왕복값
+# 자신한테 가면 INF가 뜨므로 제외
 for i in range(1, N + 1):
     if i == X:
         continue
