@@ -12,6 +12,7 @@ for _ in range(M):
     graph[b].append(a)
 
 
+# 우선순위 큐 구현
 def search(start):
     hq = list()
     check = {i: INF for i in range(1, N + 1)}
@@ -33,6 +34,7 @@ def search(start):
     return c
 
 
+# 1부터 끝까지 탐색
 min_num = 1
 min = search(1)
 for i in range(2, N + 1):
