@@ -14,14 +14,12 @@ for _ in range(M):
 
 def search(start):
     hq = list()
-    visited = {i: False for i in range(1, N + 1)}
     check = {i: INF for i in range(1, N + 1)}
     heappush(hq, (0, start))
     while hq:
         w, now = heappop(hq)
         if check[now] < w:
             continue
-        visited[now] = True
         for nxt in graph[now]:
             w2 = w + 1
             if w2 < check[nxt]:
