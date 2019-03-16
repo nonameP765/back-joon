@@ -5,7 +5,9 @@ INF = 1e9
 N = int(input())
 M = int(input())
 
+# 작은쪽 저장
 graph1 = {i: list() for i in range(1, N + 1)}
+# 큰쪽 저장
 graph2 = {i: list() for i in range(1, N + 1)}
 
 for _ in range(M):
@@ -18,7 +20,7 @@ def search(p0):
     hq = list()
     visited = {i: False for i in range(1, N + 1)}
     heappush(hq, p0)
-
+    # 작은쪽 쭉 탐색
     while hq:
         now = heappop(hq)
         if visited[now]:
@@ -30,6 +32,7 @@ def search(p0):
 
     heappush(hq, p0)
     visited[p0] = False
+    # 큰쪽 쭉 탐색
     while hq:
         now = heappop(hq)
         if visited[now]:
@@ -39,6 +42,7 @@ def search(p0):
             if not visited[nxt]:
                 heappush(hq, nxt)
     re = 0
+    # 방문을 못했으면 카운팅
     for i in range(1, N + 1):
         if not visited[i]:
             re += 1
