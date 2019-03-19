@@ -1,22 +1,33 @@
 s = input()
 
+
 while True:
-    s1 = False
-    s2 = 0
-    for i in range(len(s) - 3):
-        if s[i:i+4] == 'PPAP':
-            s1 = True
-            s2 = i
-            break
-    if s1:
-        if len(s) == 4:
-            print('PPAP')
-            break
+    stack = list()
+    success = False
+
+    for i in range(len(s) - 1):
+        if s[i] == 'A':
+            if len(stack) >= 2 and s[i + 1] == 'P':
+                success = True
+                s = s[:i - 1] + s[i + 2:]
+                break
+            else:
+                stack = list()
         else:
-            s = s[:s2 + 1] + s[s2 + 4:]
+            stack.append(1)
+
+    if success:
+        if len(s) == 4:
+            if s == 'PPAP':
+                print('PPAP')
+            else:
+                print('NP')
+            break
     else:
         print('NP')
         break
+
+
 
 
 
