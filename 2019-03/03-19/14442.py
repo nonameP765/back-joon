@@ -1,68 +1,36 @@
-N, M, K = map(int, input().split(' '))
+from sys import stdin
+from collections import deque
 
-INF = 1e9
+input = stdin.readline
 
-ma = list()
-for _ in range(N):
-    ma.append(list(map(int, input())))
+n, m, k = map(int, input().split())
+a = [list(input()) for _ in range(n)]
+dist = [[[0] * (k + 1) for _ in range(m)] for _ in range(n)]
+dx = (-1, 0, 1, 0)
+dy = (0, 1, 0, -1)
 
-check = [[{i: INF for i in range(K + 1)} for _2 in range(M)] for _ in range(N)]
-visited = [[{i: False for i in range(K + 1)} for _2 in range(M)] for _ in range(N)]
 
-check[0][0][K] = 1
+def bfs():
+    q = deque()
+    q.append((0, 0, 0))
+    dist[0][0][0] = 1
+    while q:
+        x, y, w = q.popleft()
+        if x == n - 1 and y == m - 1:
+            return dist[n - 1][m - 1][w]
+        for i in range(4):
+            nx, ny, nw = x + dx[i], y + dy[i], w + 1
+            if nx < 0 or nx >= n or ny < 0 or ny >= m:
+                continue
+            if dist[nx][ny][w]:
+                continue
+            if a[nx][ny] == '0':
+                dist[nx][ny][w] = dist[x][y][w] + 1
+                q.append((nx, ny, w))
+            if a[nx][ny] == '1' and nw <= k:
+                dist[nx][ny][nw] = dist[x][y][w] + 1
+                q.append((nx, ny, nw))
+    return -1
 
-stack = [(0, 0)]
 
-while stack:
-    i, j = stack.pop(0)
-
-    for k in range(K + 1):
-
-        w = check[i][j][k]
-        if w == INF:
-            continue
-
-        if visited[i][j][k]:
-            continue
-
-        visited[i][j][k] = True
-        if i > 0:
-            if ma[i - 1][j] == 1 and k > 0:
-                if w + 1 < check[i - 1][j][k - 1]:
-                    check[i - 1][j][k - 1] = w + 1
-                    stack.append((i - 1, j))
-            elif ma[i - 1][j] == 0:
-                if w + 1 < check[i - 1][j][k]:
-                    check[i - 1][j][k] = w + 1
-                    stack.append((i - 1, j))
-        if j > 0:
-            if ma[i][j - 1] == 1 and k > 0:
-                if w + 1 < check[i][j - 1][k - 1]:
-                    check[i][j - 1][k - 1] = w + 1
-                    stack.append((i, j - 1))
-            elif ma[i][j - 1] == 0:
-                if w + 1 < check[i][j - 1][k]:
-                    check[i][j - 1][k] = w + 1
-                    stack.append((i, j - 1))
-        if i < N - 1:
-            if ma[i + 1][j] == 1 and k > 0:
-                if w + 1 < check[i + 1][j][k - 1]:
-                    check[i + 1][j][k - 1] = w + 1
-                    stack.append((i + 1, j))
-            elif ma[i + 1][j] == 0:
-                if w + 1 < check[i + 1][j][k]:
-                    check[i + 1][j][k] = w + 1
-                    stack.append((i + 1, j))
-        if j < M - 1:
-            if ma[i][j + 1] == 1 and k > 0:
-                if w + 1 < check[i][j + 1][k - 1]:
-                    check[i][j + 1][k - 1] = w + 1
-                    stack.append((i, j + 1))
-            elif ma[i][j + 1] == 0:
-                if w + 1 < check[i][j + 1][k]:
-                    check[i][j + 1][k] = w + 1
-                stack.append((i, j + 1))
-
-a = min(check[N - 1][M - 1].values())
-
-print(-1 if a == INF else a)
+print(bfs())
